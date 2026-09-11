@@ -4,6 +4,7 @@ import { productAPI } from '../services/api';
 import { useCart } from '../context/CartContext';
 import { toast } from 'react-toastify';
 import { FiShoppingBag, FiMinus, FiPlus } from 'react-icons/fi';
+import { mediaUrl } from '../utils/mediaUrl';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -41,7 +42,7 @@ export default function ProductDetail() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'start' }}>
         <div style={{ background: 'var(--bg-card)', borderRadius: 'var(--radius)', overflow: 'hidden', border: '1px solid var(--border)' }}>
           {product.mainImage ? (
-            <img src={product.mainImage} alt={product.name} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover' }} />
+            <img src={mediaUrl(product.mainImage)} alt={product.name} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover' }} />
           ) : (
             <div style={{ aspectRatio: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem', color: 'var(--gold-dark)', fontFamily: 'var(--font-display)' }}>
               FF

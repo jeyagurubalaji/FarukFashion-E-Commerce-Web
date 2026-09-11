@@ -23,9 +23,22 @@ public class FileUploadController {
 
     private final Path uploadDir;
 
-    public FileUploadController(@Value("${app.upload-dir:uploads}") String uploadDirPath) throws IOException {
-        this.uploadDir = Paths.get(uploadDirPath).toAbsolutePath().normalize();
-        Files.createDirectories(this.uploadDir);
+    public FileUploadController(@Value("${app.upload-dir:uploads}") String uploadDirPath) {
+        Path dir = Paths.get(uploadDirPath).toAbsolutePath().normalize();
+        try {
+            Files.createDirectories(dir);
+        } catch (Exception e) {
+            // Render/Docker: /app may be read-only — use temp folder
+            Path fallback = Paths.get(System.getProperty("java.io.tmpdir"), "faruk-fashion-uploads");
+            try {
+                Files.createDirectories(fallback);
+                log.warn("Cannot use '{}': {}. Using fallback: {}", dir, e.getMessage(), fallback);
+                dir = fallback;
+            } catch (IOException ex) {
+                throw new IllegalStateException("Cannot create upload directory", ex);
+            }
+        }
+        this.uploadDir = dir;
         log.info("Upload directory: {}", this.uploadDir);
     }
 
@@ -40,7 +53,7 @@ public class FileUploadController {
             throw new RuntimeException("Only image files are allowed");
         }
 
-        if (file.getSize() > 5 * 1024 * 1024) { // 5 MB
+        if (file.getSize() > 5 * 1024 * 1024) {
             throw new RuntimeException("File size must be under 5 MB");
         }
 
@@ -54,7 +67,6 @@ public class FileUploadController {
             Path target = uploadDir.resolve(filename);
             Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
 
-            // URL that frontend can use (served by static resource config)
             String url = "/api/uploads/" + filename;
 
             Map<String, String> result = new HashMap<>();

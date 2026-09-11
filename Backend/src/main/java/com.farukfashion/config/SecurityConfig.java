@@ -55,13 +55,17 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
+        @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         // Do NOT use "*" with allowCredentials=true
         config.setAllowedOriginPatterns(List.of(
                 "http://localhost:*",
-                "http://127.0.0.1:*"
+                "http://127.0.0.1:*",
+                "https://faruk-fashion.vercel.app",
+                "https://*.onrender.com",
+                "https://farukfashion.com",
+                "https://www.farukfashion.com"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));

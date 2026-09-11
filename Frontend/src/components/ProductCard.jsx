@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { toast } from 'react-toastify';
 import { FiShoppingBag } from 'react-icons/fi';
+import { mediaUrl } from '../utils/mediaUrl';
 import './ProductCard.css';
 
 export default function ProductCard({ product }) {
@@ -24,7 +25,7 @@ export default function ProductCard({ product }) {
     <Link to={`/products/${product.id}`} className="product-card card">
       <div className="product-image-wrap">
         {product.mainImage ? (
-          <img src={product.mainImage} alt={product.name} loading="lazy" />
+          <img src={mediaUrl(product.mainImage)} alt={product.name} loading="lazy" />
         ) : (
           <div className="product-placeholder">
             <span>FF</span>

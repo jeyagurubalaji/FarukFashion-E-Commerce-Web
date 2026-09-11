@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -13,8 +17,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Serve uploaded images at /api/uploads/**
-        String location = "file:" + java.nio.file.Paths.get(uploadDir).toAbsolutePath().normalize() + "/";
+        Path dir = Paths.get(uploadDir).toAbsolutePath().normalize();
+        if (!Files.isDirectory(dir)) {
+            dir = Paths.get(System.getProperty("java.io.tmpdir"), "faruk-fashion-uploads");
+        }
+        String location = "file:" + dir + "/";
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations(location);
     }

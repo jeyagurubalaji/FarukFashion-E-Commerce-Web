@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api',
+  // Use Vite env variable or fallback to the live Render backend
+  baseURL: import.meta.env.VITE_API_URL || 'https://farukfashion-e-commerce-web.onrender.com/api',
   headers: { 'Content-Type': 'application/json' }
 });
 

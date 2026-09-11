@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { adminAPI } from '../../services/api';
 import { toast } from 'react-toastify';
 import { FiPlus, FiEdit2, FiTrash2, FiUpload } from 'react-icons/fi';
+import { mediaUrl } from '../../utils/mediaUrl';
 
 const CATEGORIES = [
   'HANDBAGS', 'TROLLEY_BAGS', 'SCHOOL_BAGS', 'COLLEGE_BAGS',
@@ -170,11 +171,7 @@ export default function AdminProducts() {
         }
       };
 
-  const imgSrc = (url) => {
-    if (!url) return null;
-    if (url.startsWith('http') || url.startsWith('data:')) return url;
-    return url;
-  };
+    const imgSrc = (url) => mediaUrl(url);
 
   return (
     <div>

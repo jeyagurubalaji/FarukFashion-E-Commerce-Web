@@ -2,9 +2,17 @@ server:
   port: ${PORT:8080}
   servlet:
     context-path: /api
-spring:
-  application:
-    name: faruk-fashion
+  tomcat:
+    threads:
+      max: 50
+      min-spare: 2
+  spring:
+    application:
+      name: faruk-fashion
+    main:
+      lazy-initialization: true
+    jmx:
+      enabled: false
   data:
     mongodb:
       uri: ${MONGODB_URI:mongodb://localhost:27017/faruk_fashion}
@@ -55,8 +63,9 @@ app:
 
 logging:
   level:
-    com.farukfashion: DEBUG
-    org.springframework.security: INFO
+    root: WARN
+    com.farukfashion: INFO
+    org.springframework.security: WARN
 
 management:
   endpoints:

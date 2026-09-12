@@ -6,13 +6,14 @@ server:
     threads:
       max: 50
       min-spare: 2
-  spring:
-    application:
-      name: faruk-fashion
-    main:
-      lazy-initialization: true
-    jmx:
-      enabled: false
+
+spring:
+  application:
+    name: faruk-fashion
+  main:
+    lazy-initialization: true
+  jmx:
+    enabled: false
   data:
     mongodb:
       uri: ${MONGODB_URI:mongodb://localhost:27017/faruk_fashion}
@@ -33,25 +34,21 @@ server:
       max-file-size: 10MB
       max-request-size: 10MB
 
-# JWT Configuration
 jwt:
   secret: ${JWT_SECRET:FarukFashionSecretKey2026VeryLongAndSecureKeyForHS512AlgorithmMustBeAtLeast64BytesLong!!}
-  expiration: 86400000          # 24 hours
-  refresh-expiration: 604800000  # 7 days
+  expiration: 86400000
+  refresh-expiration: 604800000
 
-# Razorpay Payment Gateway (replace with live keys in production)
 razorpay:
   key-id: ${RAZORPAY_KEY_ID:rzp_test_xxxxxxxxxxxx}
   key-secret: ${RAZORPAY_KEY_SECRET:your_razorpay_secret}
 
-# Twilio (WhatsApp + SMS)
 twilio:
   account-sid: ${TWILIO_ACCOUNT_SID:your_account_sid}
   auth-token: ${TWILIO_AUTH_TOKEN:your_auth_token}
   whatsapp-from: ${TWILIO_WHATSAPP_FROM:whatsapp:+14155238886}
   sms-from: ${TWILIO_SMS_FROM:+1234567890}
 
-# App specific
 app:
   name: Faruk Fashion
   support-email: support@farukfashion.com
